@@ -29,16 +29,16 @@ farPlane :: Float
 farPlane = 50
 -- | Wall visible precision
 precisionWallHidden :: Float
-precisionWallHidden = 100
+precisionWallHidden = 50
 -- | Wall distance precision
 precisionWallDist :: Float
-precisionWallDist = 100
+precisionWallDist = 50
 -- | Enemy visible precision
 precisionEnemyHidden :: Float
-precisionEnemyHidden = 200
+precisionEnemyHidden = 50
 -- | Enemy distance precision
 precisionEnemyDist :: Float
-precisionEnemyDist = 100
+precisionEnemyDist = 50
 
 -- | HP full sprite
 heart :: Picture
@@ -197,61 +197,77 @@ mapL = [map1
        ,map2
        ,map3
        ]
-
+lightL :: LightList
+lightL = [lights1
+         ,lights2
+         ,lights3
+         ]
 enemies1 :: Enemies
 enemies1 = [Enemy (3.23,5.34) (4.21,4.61) 10 1 0.3 0.7
            ,Enemy (2.6,3.07) (2.35,1.97) 10 1 0.3 1
            ]
 map1 :: GameMap
-map1 = [ Wall (1,4) (1,1)  col 1
-       , Wall (1,1) (3,1)  col 1
-       , Wall (3,1) (3,1.6)  col 1
-       , Wall (3,1.6) (1.6,1.6)  col 1
-       , Wall (1.6,1.6) (1.6,3.4)  col 1
-       , Wall (1.6,3.4) (3,3.4)  col 1
-       , Wall (3,3.4) (3,4) col 1
-       , Wall (3,4) (1,4)  col 1
-       , Wall (-1,-1) (3,-1)  col 0.6
-       , Wall (3,-1) (5,1)  col 0.8
-       , Wall (5,1) (5,6)  col 1.2
-       , Wall (5,6) (-1,6)  col 0.8
-       , Wall (-1,6) (-1,-1)  col 0.6
+map7 = [ Wall 1 (1,4) (1,1)  col 1
+        ,Wall 2 (1,1) (3,1)  col 1
+        , Wall 3 (3,1) (3,1.6)  col 1
        ]
     where
         col = makeColor (100/255) (220/255) (100/255) 1
+map1 = [ Wall 1 (1,4) (1,1)  col 1
+       , Wall 2 (1,1) (3,1)  col 1
+       , Wall 3 (3,1) (3,1.6)  col 1
+       , Wall 4 (3,1.6) (1.6,1.6)  col 1
+       , Wall 5 (1.6,1.6) (1.6,3.4)  col 1
+       , Wall 6 (1.6,3.4) (3,3.4)  col 1
+       , Wall 7 (3,3.4) (3,4) col 1
+       , Wall 8 (3,4) (1,4)  col 1
+       , Wall 9 (-1,-1) (3,-1)  col 0.6
+       , Wall 10 (3,-1) (5,1)  col 0.8
+       , Wall 11 (5,1) (5,6)  col 1.2
+       , Wall 12 (5,6) (-1,6)  col 0.8
+       , Wall 13 (-1,6) (-1,-1)  col 0.6
+       ]
+    where
+        col = makeColor (100/255) (220/255) (100/255) 1
+lights1 :: Lights
+lights1 = [(0,0)
+          ]
 enemies2 :: Enemies
 enemies2 = [Enemy (-5,4) (-6,3) 10 1 0.3 1
            ,Enemy (-3,1.6) (-4,1.6) 10 1 0.3 1
            ,Enemy (-1,4) (0,4) 10 1 0.3 1
            ]
 map2 :: GameMap
-map2 = [ Wall (2,-2) (-2,-2)  col 1
-       , Wall (-2,-0.6) (-2,-2)  col 1
-       , Wall (-2,0.4) (-2,2)  col 1
-       , Wall (-2,2) (-1,2)  col 1
-       , Wall (-1,2) (-1,2.1)  col 1
-       , Wall (-1,2.1) (-5,2.1)  col 1
-       , Wall (2,2) (2,-2)  col 1
-       , Wall (2,2) (0,2)  col 1
-       , Wall (0,2) (0,2.1)  col 1
-       , Wall (0,2.1) (2,2.1)  col 1
-       , Wall (2,2.1) (2,5)  col 1
-       , Wall (2,5) (-7,5)  col 1
-       , Wall (-5,2) (-5,2.1)  col 1
-       , Wall (-5,2) (-2.1,2)  col 1
-       , Wall (-2.1,0.4) (-2,0.4)  col 1
-       , Wall (-2.1,2) (-2.1,0.4)  col 1
-       , Wall (-7,-2) (-7,2)  col 1
-       , Wall (-7,2) (-6,2)  col 1
-       , Wall (-6,2) (-6,2.1)  col 1
-       , Wall (-6,2.1) (-7,2.1)  col 1
-       , Wall (-7,2.1) (-7,5)  col 1
-       , Wall (-2.1,-0.6) (-2,-0.6)  col 1
-       , Wall (-2.1,-0.6) (-2.1,-2)  col 1
-       , Wall (-2.1,-2) (-7,-2)  col 1
+map2 = [ Wall 1 (2,-2) (-2,-2)  col 1
+       , Wall 2 (-2,-0.6) (-2,-2)  col 1
+       , Wall 3 (-2,0.4) (-2,2)  col 1
+       , Wall 4 (-2,2) (-1,2)  col 1
+       , Wall 5 (-1,2) (-1,2.1)  col 1
+       , Wall 6 (-1,2.1) (-5,2.1)  col 1
+       , Wall 7 (2,2) (2,-2)  col 1
+       , Wall 8 (2,2) (0,2)  col 1
+       , Wall 9 (0,2) (0,2.1)  col 1
+       , Wall 10 (0,2.1) (2,2.1)  col 1
+       , Wall 11 (2,2.1) (2,5)  col 1
+       , Wall 12 (2,5) (-7,5)  col 1
+       , Wall 13 (-5,2) (-5,2.1)  col 1
+       , Wall 14 (-5,2) (-2.1,2)  col 1
+       , Wall 15 (-2.1,0.4) (-2,0.4)  col 1
+       , Wall 16 (-2.1,2) (-2.1,0.4)  col 1
+       , Wall 17 (-7,-2) (-7,2)  col 1
+       , Wall 18 (-7,2) (-6,2)  col 1
+       , Wall 19 (-6,2) (-6,2.1)  col 1
+       , Wall 20 (-6,2.1) (-7,2.1)  col 1
+       , Wall 21 (-7,2.1) (-7,5)  col 1
+       , Wall 22(-2.1,-0.6) (-2,-0.6)  col 1
+       , Wall 23 (-2.1,-0.6) (-2.1,-2)  col 1
+       , Wall 24 (-2.1,-2) (-7,-2)  col 1
        ]
     where
         col = makeColor (210/255) (180/255) (140/255) 1
+lights2 :: Lights
+lights2 = [(0,0)
+          ]
 enemies3 :: Enemies
 enemies3 = [ Enemy (0,4.65) (-1.74,3.25) 10 1 0.3 1
            , Enemy (6.97,5.29) (7.61,6.77) 10 1 0.3 1
@@ -260,26 +276,29 @@ enemies3 = [ Enemy (0,4.65) (-1.74,3.25) 10 1 0.3 1
            , Enemy (6.94,-0.83) (7.28,1.36) 10 1 0.3 1
            ]
 map3 :: GameMap
-map3 = [ Wall (-2.26,-1.69) (1.2,-4.14)  col 1
-       , Wall (1.2,-4.14) (4.49,-3.65)  col 1
-       , Wall (4.49,-3.65) (6.71,-2.36)  col 1
-       , Wall (6.71,-2.36) (8.73,-4.12)  col 1
-       , Wall (8.73,-4.12) (13.09,-3.81)  col 1
-       , Wall (13.09,-3.81) (15.42,-0.91)  col 1
-       , Wall (15.42,-0.91) (15.21,2.4)  col 1
-       , Wall (15.21,2.4) (13.2,5.6)  col 1
-       , Wall (13.2,5.6) (15.32,8.24)  col 1
-       , Wall (15.32,8.24) (14,12)  col 1
-       , Wall (14,12) (10.38,12.58)  col 1
-       , Wall (10.38,12.58) (8.78,9.89)  col 1
-       , Wall (8.78,9.89) (8.26,7.1)  col 1
-       , Wall (8.26,7.1) (4.72,7.57)  col 1
-       , Wall (4.72,7.57) (6.81,4.1)  col 1
-       , Wall (6.81,4.1) (3.79,3.09)  col 1
-       , Wall (3.79,3.09) (0.3,6.66)  col 1
-       , Wall (0.3,6.66) (-2.86,5.63)  col 1
-       , Wall (-2.86,5.63) (-4.25,2.19)  col 1
-       , Wall (-4.25,2.19) (-2.26,-1.69)  col 1
+map3 = [ Wall 1 (-2.26,-1.69) (1.2,-4.14)  col 1
+       , Wall 2 (1.2,-4.14) (4.49,-3.65)  col 1
+       , Wall 3 (4.49,-3.65) (6.71,-2.36)  col 1
+       , Wall 4 (6.71,-2.36) (8.73,-4.12)  col 1
+       , Wall 5 (8.73,-4.12) (13.09,-3.81)  col 1
+       , Wall 6 (13.09,-3.81) (15.42,-0.91)  col 1
+       , Wall 7 (15.42,-0.91) (15.21,2.4)  col 1
+       , Wall 8 (15.21,2.4) (13.2,5.6)  col 1
+       , Wall 9 (13.2,5.6) (15.32,8.24)  col 1
+       , Wall 10 (15.32,8.24) (14,12)  col 1
+       , Wall 11 (14,12) (10.38,12.58)  col 1
+       , Wall 12 (10.38,12.58) (8.78,9.89)  col 1
+       , Wall 13 (8.78,9.89) (8.26,7.1)  col 1
+       , Wall 14 (8.26,7.1) (4.72,7.57)  col 1
+       , Wall 15 (4.72,7.57) (6.81,4.1)  col 1
+       , Wall 16 (6.81,4.1) (3.79,3.09)  col 1
+       , Wall 17 (3.79,3.09) (0.3,6.66)  col 1
+       , Wall 18 (0.3,6.66) (-2.86,5.63)  col 1
+       , Wall 19 (-2.86,5.63) (-4.25,2.19)  col 1
+       , Wall 20(-4.25,2.19) (-2.26,-1.69)  col 1
        ]
     where
         col = makeColor (110/255) (100/255) (140/255) 1
+lights3 :: Lights
+lights3 = [(0,0)
+          ]

@@ -1,5 +1,6 @@
 -- | Draw 2D minimap
 module Draw_State2D where
+import Draw_State3D
 import Data_structures
 import Constants
 import Map_Filter
@@ -9,12 +10,12 @@ import Graphics.Gloss.Data.Picture
 import Graphics.Gloss.Data.Color
 -- | Draw everything in 2D
 drawAll2D:: Game_State -> Picture
-drawAll2D e = Rotate (-90) $ Scale 20 20 $ Pictures[ drawMap2DAll (gameMap e)
+drawAll2D e = Rotate (-90) $ Scale 20 20 $ Pictures $[ drawMap2DAll (gameMap e)
                                                    , drawMap2D    (gameMap e)
                                                    , drawEnemies2DAll (enemies e)
                                                    , drawEnemies2D (gameMap e) (enemies e)
                                                    , drawnPlayer2D e
-                                                   ]
+                                                   ] ++  map (drawLights2D) (lights e)
 -- | Draw the final map
 drawMap2D:: GameMap -> Picture
 drawMap2D  = Pictures . (map drawWall2D) . (map (paintWall blue)) . getFinalMap
@@ -40,3 +41,5 @@ drawnPlayer2D e = Rotate (90) $ Scale 0.5 0.5 $ color red $ Polygon[(0.5,-0.5),(
 paintWall:: Color -> Wall -> Wall
 paintWall col w = w {wColor = col}
 
+drawLights2D :: Coord -> Picture
+drawLights2D (x,y) = Translate x y (circle 0.2)

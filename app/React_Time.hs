@@ -18,6 +18,7 @@ changeLevel tick e | changeL (actions e) && length mapL < (1+ level e) = e{menu 
                                             , player = (player e) {ammo = 10, hpP = maximumHealth}
                                             , gameMap    = mapL !! level e
                                             , enemies = enemieL !! level e
+                                            , lights =   lightL !! level e
                                             }
                    | otherwise              = e
 -- | Next level when all enemies are dead
@@ -55,11 +56,11 @@ shootEnemy tick e | shoot (actions e) && ammo (player e) > 0 = e{ actions = (act
                 newHP = (hpE en) - damage(player e)
 -- | Movement
 moveWorld:: Float -> Game_State -> Game_State
-moveWorld tick e | interWall || interEnemy = rotateEnemies tick $ rotateMap tick e -- | If hitting a wall or enemt then only rotate
-                 | otherwise               = rotateEnemies tick $ moveEnemies tick $ rotateMap tick $ moveMap tick e -- | Rotate and/or move
+moveWorld tick e | interWall || interEnemy = rotateLights tick $ rotateEnemies tick $ rotateMap tick e -- | If hitting a wall or enemt then only rotate
+                 | otherwise               = rotateLights tick $ moveLights tick $ rotateEnemies tick $ moveEnemies tick $ rotateMap tick $ moveMap tick e -- | Rotate and/or move
     where
         (vx, vy) = getVecTranslate tick e
-        interWall  = any isJust $ map (wallIntercept  (-vx, -vy)) (gameMap e) -- | Checks if the player is trying to move throught a wall
+        interWall  = any isJust $ map (wallIntercept (0,0) (-vx, -vy)) (gameMap e) -- | Checks if the player is trying to move throught a wall
         interEnemy = length (filter (enemyIntercept (-vx, -vy)) (enemies e)) > 0 -- | Checks if the player is trying to move throught an enemy
 -- | Damage from enemies
 enemyDps :: Float -> Game_State -> Game_State
@@ -70,6 +71,19 @@ enemyDps tick e | newHP <= 0 = e{player = (player e){hpP = 0}, menu = MenuGameOv
         closeEnemiesDPS = sum $ map dpsE $ filter inRangeEnemy  (enemies e)
         inRangeEnemy:: Enemy -> Bool
         inRangeEnemy e = (distEnemy e) <= (rangeE e)
+-- | Rotate all lights
+rotateLights:: Float -> Game_State -> Game_State
+rotateLights tick e = e{lights = map (rotateLight (tick * (xMove $ player e))) (lights e)}
+-- | Rotate a light
+rotateLight::Float -> Coord -> Coord
+rotateLight a l = rotatePoint a l
+-- | Translate all lights
+moveLights::Float -> Game_State -> Game_State
+moveLights tick e = e{lights = map (moveLight $ getVecTranslate tick e) (lights e)}
+-- | Translate a light by a vector
+moveLight:: Vector -> Coord -> Coord
+moveLight v l = movePoint v l
+
 -- | Rotate all walls
 rotateMap:: Float -> Game_State -> Game_State
 rotateMap tick e = e{gameMap = map (rotateWall (tick * (xMove $ player e))) (gameMap e)}
@@ -87,7 +101,7 @@ rotateEnemies:: Float -> Game_State -> Game_State
 rotateEnemies tick e = e{enemies = map (rotateEnemy rX) (enemies e)}
                     where
                       rX = tick * (xMove $ player e)
--- | Rotate an given
+-- | Rotate an given enemy
 rotateEnemy::Float -> Enemy -> Enemy
 rotateEnemy a e = e{p1E = rotatePoint a (p1E e), p2E = rotatePoint a (p2E e)}
 -- | Translate all enemies

@@ -15,8 +15,8 @@ viewBox = [pn1, pn2, pf2, pf1, pn1]
         pf1 = (farPlane , farPlane  * tan (degreesToRad $ -viewAngle/2))
         pf2 = (farPlane , farPlane  * tan (degreesToRad $  viewAngle/2))
 -- | Calculate where a vector intersects a wall
-wallIntercept :: Vector -> Wall -> Maybe Coord
-wallIntercept v w = intersectSegSeg (0,0) v (p1W w) (p2W w)
+wallIntercept :: Coord -> Vector -> Wall -> Maybe Coord
+wallIntercept s v w = intersectSegSeg s v (p1W w) (p2W w)
 -- | Checks if a vector intersects an enemy
 enemyIntercept :: Vector -> Enemy -> Bool
 enemyIntercept v e = isJust $ intersectSegSeg (0,0) v (p1E e) (p2E e)
@@ -54,7 +54,10 @@ isEnemyFullyVisible walls en e = (all (id) $ map (isPointVisible walls) $ getEne
         filteredEnemies = filter (/=e) en
 -- | Checks if a point is visible
 isPointVisible:: [Wall] -> Coord -> Bool
-isPointVisible w p = not $ any isJust $ map (wallIntercept p) w
+isPointVisible w p = not $ any isJust $ map (wallIntercept (0,0) p) w
+-- | Checks if a light is visible
+isLightVisible:: [Wall] -> Coord -> Coord -> Bool
+isLightVisible w l p = not $ any isJust $ map (wallIntercept l p) w
 -- | Checks if a point is covered by an enemy
 isPointVisibleEnemy:: [Enemy] -> Coord -> Bool
 isPointVisibleEnemy e p = not $ any (id) $ map (enemyIntercept p) e

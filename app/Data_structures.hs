@@ -5,6 +5,7 @@ import Graphics.Gloss.Data.Color
 data Game_State = Game_State
                 { gameMap  :: GameMap
                 , enemies  :: Enemies
+                , lights   :: Lights
                 , player   :: Player
                 , actions  :: Actions
                 , level    :: Int
@@ -21,14 +22,15 @@ data MenuPos = MenuPlay
 type Coord = (Float, Float)
 -- | Storing wall position and color
 data Wall = Wall
-                { p1W    :: Coord
+                { idw    :: Int
+                , p1W    :: Coord
                 , p2W    :: Coord
                 , wColor :: Color
                 , wh     :: Float
                 } deriving (Show, Eq)
 -- | Defining the game map as a list of walls
 type GameMap = [Wall]
--- | Defineing a list of maps
+-- | Defines a list of maps
 type MapList = [GameMap]
 -- | Storing enemy positions, HP and damage
 data Enemy = Enemy
@@ -39,10 +41,14 @@ data Enemy = Enemy
                 , rangeE :: Float
                 , eh     :: Float
                 } deriving (Show, Eq)
--- | Defineing a list of enemies
+-- | Defines a list of enemies
 type Enemies = [Enemy]
--- | Defineing a list of lists of enemies
+-- | Defines a list of lists of enemies
 type EnemyList = [Enemies]
+-- | Defines a list of lights on a map
+type Lights = [Coord]
+-- | Defines a list of lists of lights
+type LightList = [Lights]
 -- | Player's info
 data Player = Player
                 { xMove   :: Float

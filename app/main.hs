@@ -32,7 +32,8 @@ initialState = do
                                           }
                 let defaultAction = Actions False False False False False False False False
                 return Game_State { gameMap    = mapL !! 0
-                              , enemies = enemieL!! 0
+                              , enemies = enemieL !! 0
+                              , lights  = lightL !! 0
                               , player  = defaultPlayer
                               , actions = defaultAction
                               , level   = 0
