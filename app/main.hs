@@ -1,4 +1,4 @@
--- | Main 
+-- | Main 11
 module Main where
 import Graphics.Gloss.Data.Picture
 import Graphics.Gloss.Interface.Pure.Game

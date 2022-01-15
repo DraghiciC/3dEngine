@@ -39,6 +39,7 @@ data Enemy = Enemy
                 , hpE    :: Float
                 , dpsE   :: Float
                 , rangeE :: Float
+                , eColor :: Color
                 , eh     :: Float
                 } deriving (Show, Eq)
 -- | Defines a list of enemies

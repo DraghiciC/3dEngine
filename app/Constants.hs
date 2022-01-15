@@ -202,17 +202,7 @@ lightL = [lights1
          ,lights2
          ,lights3
          ]
-enemies1 :: Enemies
-enemies1 = [Enemy (3.23,5.34) (4.21,4.61) 10 1 0.3 0.7
-           ,Enemy (2.6,3.07) (2.35,1.97) 10 1 0.3 1
-           ]
 map1 :: GameMap
-map7 = [ Wall 1 (1,4) (1,1)  col 1
-        ,Wall 2 (1,1) (3,1)  col 1
-        , Wall 3 (3,1) (3,1.6)  col 1
-       ]
-    where
-        col = makeColor (100/255) (220/255) (100/255) 1
 map1 = [ Wall 1 (1,4) (1,1)  col 1
        , Wall 2 (1,1) (3,1)  col 1
        , Wall 3 (3,1) (3,1.6)  col 1
@@ -229,13 +219,17 @@ map1 = [ Wall 1 (1,4) (1,1)  col 1
        ]
     where
         col = makeColor (100/255) (220/255) (100/255) 1
+enemies1 :: Enemies
+enemies1 = [Enemy (3.23,5.34) (4.21,4.61) 15 1 0.6 red 1
+           ,Enemy (2.6,3.07) (2.35,1.97) 10 1 0.3 red 0.7
+           ]
 lights1 :: Lights
-lights1 = [(0,0)
+lights1 = [(2,2.5)
           ]
 enemies2 :: Enemies
-enemies2 = [Enemy (-5,4) (-6,3) 10 1 0.3 1
-           ,Enemy (-3,1.6) (-4,1.6) 10 1 0.3 1
-           ,Enemy (-1,4) (0,4) 10 1 0.3 1
+enemies2 = [Enemy (-5,4) (-6,3) 10 1 0.3 red 1
+           ,Enemy (-3,1.6) (-4,1.6) 10 1 0.3 red 1
+           ,Enemy (-1,4) (0,4) 10 1 0.3 red 1
            ]
 map2 :: GameMap
 map2 = [ Wall 1 (2,-2) (-2,-2)  col 1
@@ -266,14 +260,14 @@ map2 = [ Wall 1 (2,-2) (-2,-2)  col 1
     where
         col = makeColor (210/255) (180/255) (140/255) 1
 lights2 :: Lights
-lights2 = [(0,0)
+lights2 = [(-5,2.7)
           ]
 enemies3 :: Enemies
-enemies3 = [ Enemy (0,4.65) (-1.74,3.25) 10 1 0.3 1
-           , Enemy (6.97,5.29) (7.61,6.77) 10 1 0.3 1
-           , Enemy (10.41,11.13) (12.4,11.16) 10 1 0.3 1
-           , Enemy (8.62,3.59) (10,2) 10 1 0.3 1
-           , Enemy (6.94,-0.83) (7.28,1.36) 10 1 0.3 1
+enemies3 = [ Enemy (0,4.65) (-1.74,3.25) 10 1 0.3 red 1
+           , Enemy (6.97,5.29) (7.61,6.77) 10 1 0.3 red 1
+           , Enemy (10.41,11.13) (12.4,11.16) 10 1 0.3 red 1
+           , Enemy (8.62,3.59) (10,2) 10 1 0.3 red 1
+           , Enemy (6.94,-0.83) (7.28,1.36) 10 1 0.3 red 1
            ]
 map3 :: GameMap
 map3 = [ Wall 1 (-2.26,-1.69) (1.2,-4.14)  col 1

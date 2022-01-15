@@ -46,7 +46,7 @@ drawWall3D e w = drawShape3Dw e w (wh w) (wColor w) (p1W w) (p2W w) 0
 drawEnemy3D:: Game_State -> Enemy -> Picture
 drawEnemy3D e en = drawShape3De e en (eh en) c (p1E en) (p2E en) 1
     where
-        c = makeColor (217/255) (39/255) (56/255) 1
+        c = eColor en
 -- | Draw a shape
 drawShape3Dw:: Game_State -> Wall -> Float -> Color -> Coord -> Coord -> Int -> Picture
 drawShape3Dw e w h col p1 p2 0 = Pictures $ [lighting e w h col p1 p2] ++
@@ -70,7 +70,7 @@ lighting e w h col p1 p2 = Pictures $ map (part e w col) seg
         seg = zip s1 s2
         s2 = tail s0
         s1 = init s0
-        s0 = getLineSegment p1 p2 20-- |(max precisionWallDist (distCoord p1 p2)/1)
+        s0 = getLineSegment p1 p2 20
         part :: Game_State -> Wall -> Color -> (Coord, Coord) -> Picture
         part e w col s= shade e w col s $ Polygon (getCornerPoints e h (p1,p2) s)
 -- | color shading
@@ -81,7 +81,7 @@ shade e w col ((x1,y1),(x2,y2)) pic = Pictures [Color ncol pic
     where
         ncol = mixColors pr1 pr2 col black 
         pr1 = 1 - pr2
-        pr2 = min 0.98 (minDistance/4)
+        pr2 = min 0.98 (sqrt (minDistance/5))
         p = ((x1 + x2) / 2, (y1 + y2) / 2)
         minDistance = if length distances > 0 then minimum distances else 1000
         distances = map (distLight e w p) l
@@ -99,7 +99,7 @@ distLight e w p l= if visible then distance else 1000
 getLineSegment:: Coord -> Coord -> Float -> [Coord]
 getLineSegment p1 p2 nP = map (calcVec p1 vec step) [0.. nPd]
     where
-        nPd = nP -- |* (distCoord p1 p2)
+        nPd = nP * fromIntegral (ceiling (distCoord p1 p2))
         step = (distCoord p1 p2) / nPd
         vec  = unitVetor p1 p2
         calcVec :: Coord -> Coord -> Float -> Float -> Coord
