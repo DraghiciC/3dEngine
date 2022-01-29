@@ -70,7 +70,7 @@ lighting e w h col p1 p2 = Pictures $ map (part e w col) seg
         seg = zip s1 s2
         s2 = tail s0
         s1 = init s0
-        s0 = getLineSegment p1 p2 20
+        s0 = getLineSegment p1 p2 (lightFid e)
         part :: Game_State -> Wall -> Color -> (Coord, Coord) -> Picture
         part e w col s= shade e w col s $ Polygon (getCornerPoints e h (p1,p2) s)
 -- | color shading

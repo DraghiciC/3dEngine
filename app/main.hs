@@ -1,4 +1,4 @@
--- | Main 11
+-- | Main 
 module Main where
 import Graphics.Gloss.Data.Picture
 import Graphics.Gloss.Interface.Pure.Game
@@ -40,5 +40,6 @@ initialState = do
                               , menu    = MenuPlay
                               , winSize = (0,0)
                               , aux     = 0
+                              , lightFid= 5
                               }
 

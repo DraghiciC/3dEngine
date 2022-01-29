@@ -12,6 +12,7 @@ data Game_State = Game_State
                 , menu     :: MenuPos
                 , winSize  :: (Int, Int)
                 , aux      :: Int
+                , lightFid :: Float
                 }
 -- | Stores if the player is still playing or has lost
 data MenuPos = MenuPlay
