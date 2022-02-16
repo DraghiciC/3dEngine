@@ -12,7 +12,7 @@ import Data.List
 -- | Draw the entire state in 3D
 drawAll3D::Game_State -> Picture
 -- |drawAll3D e = Pictures $ [floor, sky] ++ (test (aux e) (drawParts e m en)) ++ [crosshair] ++ [dGun]
-drawAll3D e = Pictures $ [floor, sky] ++ drawParts e m en ++ [crosshair] ++ [dGun]
+drawAll3D e = Pictures $ [floor, sky] ++ drawParts e m en
     where
         (sxI, syI) = winSize e
         (sx, sy)   = ((fromIntegral sxI) / 2, (fromIntegral syI) / 2)
@@ -20,8 +20,6 @@ drawAll3D e = Pictures $ [floor, sky] ++ drawParts e m en ++ [crosshair] ++ [dGu
         m          = getFinalMap (gameMap e)
         floor      = Color (makeColor (138/255) (69/255)  (19/255)  1) $ Polygon [(-sx, 0), (sx,0), (sx, -sy), (-sx, -sy)] -- | Draw the floor
         sky        = Color (makeColor (57/255) (34/255) (87/255) 1) $ Polygon [(-sx, 0), (sx,0), (sx,  sy), (-sx, sy)] -- | Draw the sky
-        crosshair  = target red $ min (fromIntegral(sxI)/22)(fromIntegral(syI)/22) -- | Draw crosshair
-        dGun       = drawGun $ min (fromIntegral sxI)(fromIntegral syI)
 -- | Test for ilustrations
 test:: Int -> [Picture] -> [Picture]
 test t p | t /= 0 = (head p) : (test (t-1) (tail p))
@@ -121,29 +119,3 @@ getCornerPoints e h ((p1, o1),(p2, o2)) ((x1, y1),(x2, y2)) = [(xW1,pH1), (xW1,h
         xW2 =  sl2               * ratio
         sl1 =  (y1 / x1)
         sl2 =  (y2 / x2)
--- | Draw crosshair
-target:: Color -> Float -> Picture
-target col r =  Pictures[pol, Rotate 90 pol, Rotate 180 pol, Rotate (-90) pol]
-    where
-        lines = [(0,0), (0,u*5), (u, u*5), (u, u), (u*5,u), (u*5, 0)]
-        u = r/14
-        pol = Translate (u/2) (u/2) $ Pictures[ Color col                 $ Polygon lines
-                                              , Color (contrastColor col) $ lineLoop lines]
--- | Draw gun
-drawGun:: Float -> Picture
-drawGun r =  Pictures[pol]
-    where
-        lines0 = [(0, 0), (0, u), (u*3, 0), (u*3, u*(-2)), (0,0)]
-        lines1 = [(u*3, 0), (u*3, u*(-6)), (u*2, u*(-6)), (u*2, u*(-1.33))]
-        lines2 = [(u*3, 0), (u*3, u*(-6)), (u*5, u*(-6)), (u*5, 0), (u*3, 0)]
-        lines3 = [(0, u), (u, u), (u*5, 0), (u*3, 0), (0, u)]
-        u = r/12
-        pol = Translate (u*3) (u*(-3)) $ Pictures[     Color red   $ Polygon lines0
-                                              , Color black $ lineLoop lines0
-                                              , Color (makeColor (200/255) (0/255) (0/255) 1)   $ Polygon lines1
-                                              , Color black $ lineLoop lines1
-                                              , Color red   $ Polygon lines2
-                                              , Color black $ lineLoop lines2
-                                              , Color (makeColor (200/255) (50/255) (50/255) 1)   $ Polygon lines3
-                                              , Color black $ lineLoop lines3
-                                              ]
